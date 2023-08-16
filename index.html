@@ -1,0 +1,49 @@
+{{- define "bread" -}}
+<div id="bread" x-data="{ type: '' }">
+	<label>Bread type</label>
+	<select name="type" hx-get="/bread" hx-target="next div" x-init="type = $el.value" @htmx:confirm.prevent="if (!confirm('Changing this will reset all settings. Are you sure?')) {$el.value = type} else {$type = $el.value; $event.detail.issueRequest()}">
+		<option value="thin-toast">thin toast</option>
+		<option value="texas-toast">Texas toast</option>
+		<option value="arabic-bread">Arabic bread</option>
+	</select>
+</div>
+<div></div>
+{{- end -}}
+
+{{- define "bread/thin-toast" -}}
+<label>Food</label>
+<select name="food">
+	<option>Peanut Butter</option>
+	<option>Jelly</option>
+	<option>Peanut Butter + Jelly</option>
+</select>
+<label>Toaster time</label>
+<select name="toaster">
+	<option value="5">5 minutes</option>
+	<option value="10">10 minutes</option>
+	<option value="15">15 minutes</option>
+</select>
+{{- end -}}
+
+{{- define "bread/texas-toast" -}}
+<h1>French toast</h1>
+{{- end -}}
+
+{{- define "bread/arabic-bread" -}}
+<h1>You're toast</h1>
+{{- end -}}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Cascading Selects</title>
+	<script defer type="text/javascript" src="https://unpkg.com/htmx.org@1.9.4"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+	<h1>PC Helper</h1>
+	{{- template "bread" -}}
+</body>
+</html>

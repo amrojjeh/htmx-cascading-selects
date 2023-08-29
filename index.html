@@ -1,7 +1,19 @@
+{{- define "bread-fixed" -}}
+<div id="bread" x-data="{ type: '' }">
+	<label>Bread type</label>
+	<select name="type" hx-get="/bread" hx-target="next div" x-init="type = $el.value" @htmx:confirm.prevent="if (!confirm('Are you sure you want to change?')) {$el.value = type} else {$type = $el.value; $event.detail.issueRequest()}">
+		<option value="thin-toast">thin toast</option>
+		<option value="texas-toast">Texas toast</option>
+		<option value="arabic-bread">Arabic bread</option>
+	</select>
+</div>
+<div></div>
+{{- end -}}
+
 {{- define "bread" -}}
 <div id="bread" x-data="{ type: '' }">
 	<label>Bread type</label>
-	<select name="type" hx-get="/bread" hx-target="next div" x-init="type = $el.value" @htmx:confirm.prevent="if (!confirm('Changing this will reset all settings. Are you sure?')) {$el.value = type} else {$type = $el.value; $event.detail.issueRequest()}">
+	<select name="type" hx-get="/bread" hx-target="next div" hx-confirm="Are you sure you want to change?">
 		<option value="thin-toast">thin toast</option>
 		<option value="texas-toast">Texas toast</option>
 		<option value="arabic-bread">Arabic bread</option>
@@ -44,6 +56,6 @@
 </head>
 <body>
 	<h1>PC Helper</h1>
-	{{- template "bread" -}}
+	{{- template "bread-fixed" -}}
 </body>
 </html>
